@@ -1,0 +1,492 @@
+{
+  "meta": {
+    "appName": "Catalogo Tecnicos en Sistemas",
+    "version": "1.0.0",
+    "currency": "EUR",
+    "updatedAt": "2025-12-23"
+  },
+  "categories": [
+    {
+      "id": 1,
+      "name": "Soporte PC/Laptop",
+      "slug": "soporte-pc"
+    },
+    {
+      "id": 2,
+      "name": "Redes y WiFi",
+      "slug": "redes-wifi"
+    },
+    {
+      "id": 3,
+      "name": "Seguridad",
+      "slug": "seguridad"
+    },
+    {
+      "id": 4,
+      "name": "Servidores",
+      "slug": "servidores"
+    },
+    {
+      "id": 5,
+      "name": "Software y Sistemas",
+      "slug": "software-sistemas"
+    },
+    {
+      "id": 6,
+      "name": "Recuperación de datos",
+      "slug": "recuperacion-datos"
+    }
+  ],
+  "zones": [
+    {
+      "id": 1,
+      "name": "Madrid",
+      "slug": "madrid"
+    },
+    {
+      "id": 2,
+      "name": "Barcelona",
+      "slug": "barcelona"
+    },
+    {
+      "id": 3,
+      "name": "Valencia",
+      "slug": "valencia"
+    },
+    {
+      "id": 4,
+      "name": "Sevilla",
+      "slug": "sevilla"
+    },
+    {
+      "id": 5,
+      "name": "Bilbao",
+      "slug": "bilbao"
+    },
+    {
+      "id": 6,
+      "name": "Remoto",
+      "slug": "remoto"
+    }
+  ],
+  "services": [
+    {
+      "id": 101,
+      "name": "Diagnóstico y puesta a punto",
+      "categoryId": 1,
+      "basePrice": 25,
+      "unit": "servicio",
+      "durationMin": 45,
+      "description": "Revisión general, limpieza lógica, optimización de inicio y rendimiento."
+    },
+    {
+      "id": 102,
+      "name": "Formateo e instalación de Windows",
+      "categoryId": 5,
+      "basePrice": 60,
+      "unit": "servicio",
+      "durationMin": 120,
+      "description": "Instalación del sistema, drivers y software básico. No incluye licencia."
+    },
+    {
+      "id": 103,
+      "name": "Eliminación de virus/malware",
+      "categoryId": 3,
+      "basePrice": 45,
+      "unit": "servicio",
+      "durationMin": 90,
+      "description": "Análisis, limpieza, refuerzo de seguridad y recomendaciones."
+    },
+    {
+      "id": 104,
+      "name": "Configuración de router y WiFi",
+      "categoryId": 2,
+      "basePrice": 40,
+      "unit": "servicio",
+      "durationMin": 60,
+      "description": "Optimización WiFi, canal, seguridad WPA2/WPA3, invitados, etc."
+    },
+    {
+      "id": 105,
+      "name": "Instalación de cableado y puntos de red",
+      "categoryId": 2,
+      "basePrice": 55,
+      "unit": "hora",
+      "durationMin": 60,
+      "description": "Tendido, crimpado, testeo. Material no incluido."
+    },
+    {
+      "id": 106,
+      "name": "Montaje/upgrade PC (RAM, SSD, GPU)",
+      "categoryId": 1,
+      "basePrice": 35,
+      "unit": "servicio",
+      "durationMin": 60,
+      "description": "Instalación y pruebas de componentes. Material no incluido."
+    },
+    {
+      "id": 107,
+      "name": "Copia de seguridad y migración",
+      "categoryId": 6,
+      "basePrice": 50,
+      "unit": "servicio",
+      "durationMin": 120,
+      "description": "Backup, migración de datos/perfiles, verificación."
+    },
+    {
+      "id": 108,
+      "name": "Administración servidor Linux (básico)",
+      "categoryId": 4,
+      "basePrice": 70,
+      "unit": "hora",
+      "durationMin": 60,
+      "description": "Usuarios, permisos, servicios, monitoreo básico."
+    },
+    {
+      "id": 109,
+      "name": "Configuración de NAS y acceso remoto",
+      "categoryId": 4,
+      "basePrice": 65,
+      "unit": "servicio",
+      "durationMin": 90,
+      "description": "Comparticiones, permisos, backups, acceso seguro."
+    },
+    {
+      "id": 110,
+      "name": "Soporte remoto",
+      "categoryId": 5,
+      "basePrice": 20,
+      "unit": "hora",
+      "durationMin": 60,
+      "description": "Asistencia por llamada/videollamada y control remoto."
+    }
+  ],
+  "technicians": [
+    {
+      "id": 1,
+      "fullName": "Diego Martín",
+      "headline": "Soporte y optimización Windows/Linux",
+      "bio": "Técnico con 6 años de experiencia en soporte, mantenimiento y upgrades. Atención a domicilio y remoto.",
+      "phone": "+34 600 111 222",
+      "email": "diego.martin@ejemplo.com",
+      "zones": [
+        1,
+        6
+      ],
+      "languages": [
+        "es",
+        "en"
+      ],
+      "skills": [
+        "Windows",
+        "Linux",
+        "Hardware",
+        "Backup",
+        "Malware removal"
+      ],
+      "serviceIds": [
+        101,
+        102,
+        103,
+        106,
+        107,
+        110
+      ],
+      "pricing": {
+        "callout": "Diagnóstico desde 25€",
+        "minJob": 25,
+        "travelFee": {
+          "enabled": true,
+          "base": 10,
+          "notes": "Solo a domicilio fuera de M-30"
+        }
+      },
+      "rating": {
+        "avg": 4.7,
+        "count": 18
+      },
+      "availability": {
+        "timezone": "Europe/Madrid",
+        "week": {
+          "mon": [
+            "10:00-14:00",
+            "16:00-19:00"
+          ],
+          "tue": [
+            "10:00-14:00",
+            "16:00-19:00"
+          ],
+          "wed": [
+            "10:00-14:00"
+          ],
+          "thu": [
+            "10:00-14:00",
+            "16:00-19:00"
+          ],
+          "fri": [
+            "10:00-14:00"
+          ],
+          "sat": [
+            "11:00-13:00"
+          ],
+          "sun": []
+        }
+      },
+      "active": true,
+      "createdAt": "2025-11-02"
+    },
+    {
+      "id": 2,
+      "fullName": "Laura Pérez",
+      "headline": "Redes, WiFi y seguridad doméstica",
+      "bio": "Especialista en redes pequeñas, optimización WiFi y configuración segura. Ideal para hogares y pequeñas oficinas.",
+      "phone": "+34 611 222 333",
+      "email": "laura.perez@ejemplo.com",
+      "zones": [
+        2,
+        6
+      ],
+      "languages": [
+        "es",
+        "ca",
+        "en"
+      ],
+      "skills": [
+        "Networking",
+        "WiFi",
+        "Router config",
+        "Firewall básico",
+        "NAS"
+      ],
+      "serviceIds": [
+        104,
+        105,
+        109,
+        110
+      ],
+      "pricing": {
+        "callout": "WiFi optimizado desde 40€",
+        "minJob": 40,
+        "travelFee": {
+          "enabled": true,
+          "base": 12,
+          "notes": "Barcelona ciudad sin coste extra"
+        }
+      },
+      "rating": {
+        "avg": 4.9,
+        "count": 31
+      },
+      "availability": {
+        "timezone": "Europe/Madrid",
+        "week": {
+          "mon": [
+            "09:00-13:00",
+            "15:00-18:00"
+          ],
+          "tue": [
+            "09:00-13:00",
+            "15:00-18:00"
+          ],
+          "wed": [
+            "09:00-13:00",
+            "15:00-18:00"
+          ],
+          "thu": [
+            "09:00-13:00"
+          ],
+          "fri": [
+            "09:00-12:00"
+          ],
+          "sat": [
+            "10:00-13:00"
+          ],
+          "sun": []
+        }
+      },
+      "active": true,
+      "createdAt": "2025-10-14"
+    },
+    {
+      "id": 3,
+      "fullName": "Sergio Ruiz",
+      "headline": "Servidores Linux, virtualización y backup",
+      "bio": "Admin de sistemas para pymes: servidores, monitoreo, copias y migraciones. Trabajo por horas y remoto.",
+      "phone": "+34 622 333 444",
+      "email": "sergio.ruiz@ejemplo.com",
+      "zones": [
+        3,
+        6
+      ],
+      "languages": [
+        "es",
+        "en"
+      ],
+      "skills": [
+        "Linux",
+        "Docker",
+        "Nginx",
+        "Backups",
+        "Troubleshooting"
+      ],
+      "serviceIds": [
+        108,
+        109,
+        107,
+        110
+      ],
+      "pricing": {
+        "callout": "Admin Linux desde 70€/h",
+        "minJob": 70,
+        "travelFee": {
+          "enabled": false,
+          "base": 0,
+          "notes": "Principalmente remoto"
+        }
+      },
+      "rating": {
+        "avg": 4.6,
+        "count": 12
+      },
+      "availability": {
+        "timezone": "Europe/Madrid",
+        "week": {
+          "mon": [
+            "18:00-21:00"
+          ],
+          "tue": [
+            "18:00-21:00"
+          ],
+          "wed": [
+            "18:00-21:00"
+          ],
+          "thu": [
+            "18:00-21:00"
+          ],
+          "fri": [
+            "18:00-21:00"
+          ],
+          "sat": [
+            "10:00-14:00"
+          ],
+          "sun": [
+            "10:00-12:00"
+          ]
+        }
+      },
+      "active": true,
+      "createdAt": "2025-12-01"
+    }
+  ],
+  "reviews": [
+    {
+      "id": 1001,
+      "technicianId": 1,
+      "authorName": "María G.",
+      "rating": 5,
+      "comment": "Me dejó el portátil como nuevo y me explicó todo claro.",
+      "createdAt": "2025-12-05"
+    },
+    {
+      "id": 1002,
+      "technicianId": 1,
+      "authorName": "Carlos G.",
+      "rating": 4,
+      "comment": "Rápido y profesional. Solo tardó un poco en llegar.",
+      "createdAt": "2025-11-20"
+    },
+    {
+      "id": 1003,
+      "technicianId": 2,
+      "authorName": "Júlia S.",
+      "rating": 5,
+      "comment": "WiFi perfecto en toda la casa. Muy recomendable.",
+      "createdAt": "2025-12-12"
+    },
+    {
+      "id": 1004,
+      "technicianId": 3,
+      "authorName": "David P.",
+      "rating": 5,
+      "comment": "Montó backups y dejó todo automatizado. Crack.",
+      "createdAt": "2025-12-18"
+    }
+  ],
+  "requests": [
+    {
+      "id": 5001,
+      "client": {
+        "name": "Ana López",
+        "email": "ana.lopez@ejemplo.com",
+        "phone": "+34 633 444 555"
+      },
+      "serviceId": 104,
+      "preferredZoneId": 2,
+      "mode": "domicilio",
+      "details": "El WiFi no llega bien a las habitaciones. Router en el salón.",
+      "status": "open",
+      "createdAt": "2025-12-21"
+    },
+    {
+      "id": 5002,
+      "client": {
+        "name": "Iván R.",
+        "email": "ivan.r@ejemplo.com",
+        "phone": "+34 644 555 666"
+      },
+      "serviceId": 103,
+      "preferredZoneId": 1,
+      "mode": "remoto",
+      "details": "Creo que tengo malware, aparecen anuncios y va lento.",
+      "status": "assigned",
+      "assignedToTechnicianId": 1,
+      "createdAt": "2025-12-22"
+    }
+  ],
+  "bookings": [
+    {
+      "id": 8001,
+      "technicianId": 2,
+      "requestId": 5001,
+      "scheduledAt": "2025-12-27T11:00:00+01:00",
+      "durationMin": 60,
+      "status": "confirmed",
+      "notes": "Llevar repetidor para prueba si hace falta."
+    }
+  ],
+  "servers": [
+    {
+      "id": 1,
+      "name": "windows",
+      "cpu": "4 vCPU",
+      "ram": "4 GB",
+      "storage": "200 GB SSD",
+      "os": "Windows Server 2022",
+      "budget": 200,
+      "status": "mantenimiento",
+      "createdAt": "2025-12-23T08:35:17.019Z"
+    },
+    {
+      "id": 2,
+      "name": "Ander Arregi",
+      "cpu": "3 vCPU",
+      "ram": "6 GB",
+      "storage": "255 GB SSD",
+      "os": "Ubuntu 24.04",
+      "budget": 300,
+      "status": "activo",
+      "createdAt": "2025-12-23T08:36:38.347Z"
+    },
+    {
+      "id": 3,
+      "name": "jduudud",
+      "cpu": "4 vCPU",
+      "ram": "5 GB",
+      "storage": "360 GB HDD",
+      "os": "Debian 12",
+      "budget": 300,
+      "status": "inactivo",
+      "createdAt": "2025-12-23T08:44:10.613Z"
+    }
+  ]
+}
