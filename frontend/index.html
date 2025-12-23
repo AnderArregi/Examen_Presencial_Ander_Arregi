@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TechSpecs Manager</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="styles.css" />
   </head>
+
   <body>
     <header class="header">
       <div class="header__inner">
@@ -15,11 +16,10 @@
     </header>
 
     <main class="container">
-      <!-- FORM -->
       <section class="panel panel--form">
         <div class="panel__head">
           <h2>Registrar servidor</h2>
-          <p class="muted">Validaciones: CPU ≥ 2 núcleos, RAM ≥ 4GB, presupuesto ≤ 700€</p>
+          <p class="muted">Precio automático (máx. 700€). Estado cambia el color de la tarjeta.</p>
         </div>
 
         <form id="serverForm" class="form" novalidate>
@@ -31,50 +31,52 @@
             </div>
 
             <div class="field">
-              <label for="cpuCores">CPU (núcleos)</label>
-              <input id="cpuCores" name="cpuCores" type="number" min="2" step="1" placeholder="2" required />
-              <small class="hint">Mínimo 2 núcleos.</small>
-            </div>
-
-            <div class="field">
-              <label for="ramGb">RAM (GB)</label>
-              <input id="ramGb" name="ramGb" type="number" min="4" step="1" placeholder="4" required />
-              <small class="hint">Mínimo 4GB.</small>
-            </div>
-
-            <div class="field">
-              <label for="storageType">Almacenamiento</label>
-              <select id="storageType" name="storageType" required>
+              <label for="cpuPlan">CPU</label>
+              <select id="cpuPlan" name="cpuPlan" required>
                 <option value="">Selecciona...</option>
-                <option value="SSD">SSD</option>
-                <option value="HDD">HDD</option>
+                <option value="2 vCPU" data-price="120">2 vCPU (+120€)</option>
+                <option value="4 vCPU" data-price="200">4 vCPU (+200€)</option>
+                <option value="8 vCPU" data-price="320">8 vCPU (+320€)</option>
+                <option value="16 vCPU" data-price="520">16 vCPU (+520€)</option>
               </select>
-              <small class="hint">SSD o HDD.</small>
-            </div>
-
-            <!-- Campos necesarios por el backend (puedes dejarlos visibles o no) -->
-            <div class="field">
-              <label for="storageGb">Capacidad (GB)</label>
-              <input id="storageGb" name="storageGb" type="number" min="64" step="1" placeholder="160" required />
-              <small class="hint">Ej: 160, 500, 1000…</small>
+              <small class="hint">Mínimo 2 núcleos (en opciones).</small>
             </div>
 
             <div class="field">
-              <label for="os">Sistema Operativo</label>
-              <select id="os" name="os" required>
+              <label for="ramPlan">RAM</label>
+              <select id="ramPlan" name="ramPlan" required>
                 <option value="">Selecciona...</option>
-                <option value="Ubuntu 22.04">Ubuntu 22.04</option>
-                <option value="Ubuntu 24.04">Ubuntu 24.04</option>
-                <option value="Debian 12">Debian 12</option>
-                <option value="Windows Server 2022">Windows Server 2022</option>
+                <option value="4 GB" data-price="60">4 GB (+60€)</option>
+                <option value="8 GB" data-price="110">8 GB (+110€)</option>
+                <option value="16 GB" data-price="190">16 GB (+190€)</option>
+                <option value="32 GB" data-price="330">32 GB (+330€)</option>
               </select>
-              <small class="hint">Requerido por el backend.</small>
+              <small class="hint">Mínimo 4GB (en opciones).</small>
             </div>
 
             <div class="field">
-              <label for="budget">Presupuesto (€)</label>
-              <input id="budget" name="budget" type="number" min="0" max="700" step="1" placeholder="350" required />
-              <small class="hint">No puede superar 700€.</small>
+              <label for="storagePlan">Almacenamiento</label>
+              <select id="storagePlan" name="storagePlan" required>
+                <option value="">Selecciona...</option>
+                <option value="256 GB SSD" data-price="80">256 GB SSD (+80€)</option>
+                <option value="512 GB SSD" data-price="130">512 GB SSD (+130€)</option>
+                <option value="1 TB SSD" data-price="220">1 TB SSD (+220€)</option>
+                <option value="1 TB HDD" data-price="70">1 TB HDD (+70€)</option>
+                <option value="2 TB HDD" data-price="120">2 TB HDD (+120€)</option>
+              </select>
+              <small class="hint">Tipo y capacidad incluidos.</small>
+            </div>
+
+            <div class="field">
+              <label for="osPlan">Sistema Operativo</label>
+              <select id="osPlan" name="osPlan" required>
+                <option value="">Selecciona...</option>
+                <option value="Ubuntu 24.04" data-price="0">Ubuntu 24.04 (+0€)</option>
+                <option value="Ubuntu 22.04" data-price="0">Ubuntu 22.04 (+0€)</option>
+                <option value="Debian 12" data-price="0">Debian 12 (+0€)</option>
+                <option value="Windows Server 2022" data-price="160">Windows Server 2022 (+160€)</option>
+              </select>
+              <small class="hint">El precio depende del SO.</small>
             </div>
 
             <div class="field">
@@ -84,7 +86,13 @@
                 <option value="mantenimiento">Mantenimiento</option>
                 <option value="inactivo">Inactivo</option>
               </select>
-              <small class="hint">Afecta el color de la tarjeta.</small>
+              <small class="hint">Define el color de la tarjeta.</small>
+            </div>
+
+            <div class="field">
+              <label for="totalPrice">Total (€)</label>
+              <input id="totalPrice" type="text" value="0 €" readonly />
+              <small id="priceHint" class="hint">Selecciona CPU, RAM, almacenamiento y SO.</small>
             </div>
           </div>
 
@@ -97,12 +105,11 @@
         </form>
       </section>
 
-      <!-- LIST -->
       <section class="panel panel--list">
         <div class="panel__head panel__head--row">
           <div>
             <h2>Servidores registrados</h2>
-            <p class="muted">Se cargan desde la API con fetch al iniciar.</p>
+            <p class="muted">Se cargan desde la API al iniciar. Puedes borrar desde cada tarjeta.</p>
           </div>
 
           <div class="toolbar">
@@ -118,6 +125,6 @@
       <p>TechSpecs Manager · Frontend (Grid + Flexbox) · Backend Express</p>
     </footer>
 
-    <script src="./app.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>

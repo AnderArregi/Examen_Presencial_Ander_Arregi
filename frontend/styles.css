@@ -1,3 +1,4 @@
+
 :root {
   --bg: #0b1220;
   --panel: #111a2d;
@@ -60,15 +61,13 @@ body {
   max-width: 1100px;
   margin: 0 auto;
   padding: 18px 16px 28px;
-  display: grid;                 /* ✅ GRID principal */
+  display: grid;
   grid-template-columns: 420px 1fr;
   gap: 16px;
 }
 
 @media (max-width: 960px) {
-  .container {
-    grid-template-columns: 1fr;
-  }
+  .container { grid-template-columns: 1fr; }
 }
 
 .panel {
@@ -84,7 +83,7 @@ body {
 }
 
 .panel__head--row {
-  display: flex;                 /* ✅ FLEX toolbar */
+  display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
@@ -97,12 +96,10 @@ body {
 
 .muted { color: var(--muted); margin: 6px 0 0; }
 
-.form {
-  padding: 14px;
-}
+.form { padding: 14px; }
 
 .form__grid {
-  display: grid;                 /* ✅ GRID formulario */
+  display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
@@ -112,7 +109,7 @@ body {
 }
 
 .field {
-  display: flex;                 /* ✅ FLEX campo */
+  display: flex;
   flex-direction: column;
   gap: 6px;
 }
@@ -144,7 +141,7 @@ input:focus, select:focus {
 
 .form__actions {
   margin-top: 12px;
-  display: flex;                 /* ✅ FLEX botones */
+  display: flex;
   gap: 10px;
   align-items: center;
 }
@@ -165,9 +162,7 @@ input:focus, select:focus {
   border-color: rgba(59, 130, 246, 0.35);
 }
 
-.btn--ghost {
-  background: transparent;
-}
+.btn--ghost { background: transparent; }
 
 .form__msg {
   margin-top: 10px;
@@ -176,10 +171,9 @@ input:focus, select:focus {
   font-size: 0.92rem;
 }
 
-/* Cards */
 .cards {
   padding: 14px;
-  display: grid;                 /* ✅ GRID cards */
+  display: grid;
   grid-template-columns: repeat(2, minmax(220px, 1fr));
   gap: 12px;
 }
@@ -193,22 +187,19 @@ input:focus, select:focus {
   border: 1px solid var(--border);
   padding: 12px;
   background: rgba(255,255,255,0.03);
-  display: flex;                 /* ✅ FLEX contenido card */
+  display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
 .card__top {
-  display: flex;                 /* ✅ FLEX fila */
+  display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 10px;
 }
 
-.card__title {
-  margin: 0;
-  font-size: 1rem;
-}
+.card__title { margin: 0; font-size: 1rem; }
 
 .badge {
   font-size: 0.78rem;
@@ -221,7 +212,6 @@ input:focus, select:focus {
   white-space: nowrap;
 }
 
-/* Color según status */
 .card--activo {
   background: linear-gradient(180deg, var(--ok), rgba(255,255,255,0.02));
   border-color: var(--ok-br);
@@ -257,13 +247,16 @@ input:focus, select:focus {
   color: var(--muted);
   margin-bottom: 2px;
 }
-.specs span {
-  font-size: 0.92rem;
-}
+.specs span { font-size: 0.92rem; }
 
 .footer {
   border-top: 1px solid var(--border);
   color: var(--muted);
   text-align: center;
   padding: 14px 16px;
+}
+
+input[readonly] {
+  opacity: 0.92;
+  cursor: not-allowed;
 }

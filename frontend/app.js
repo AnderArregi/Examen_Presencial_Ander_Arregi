@@ -8,49 +8,87 @@ const els = {
   resetBtn: document.getElementById("resetBtn"),
 
   name: document.getElementById("name"),
-  cpuCores: document.getElementById("cpuCores"),
-  ramGb: document.getElementById("ramGb"),
-  storageType: document.getElementById("storageType"),
-  storageGb: document.getElementById("storageGb"),
-  os: document.getElementById("os"),
-  budget: document.getElementById("budget"),
-  status: document.getElementById("status")
+  cpuPlan: document.getElementById("cpuPlan"),
+  ramPlan: document.getElementById("ramPlan"),
+  storagePlan: document.getElementById("storagePlan"),
+  osPlan: document.getElementById("osPlan"),
+  status: document.getElementById("status"),
+
+  totalPrice: document.getElementById("totalPrice"),
+  priceHint: document.getElementById("priceHint")
 };
 
 function setMsg(text, type = "info") {
   els.msg.textContent = text || "";
   els.msg.style.color =
-    type === "error" ? "rgba(239, 68, 68, 0.95)" :
-    type === "ok" ? "rgba(34, 197, 94, 0.95)" :
-    "rgba(167, 180, 199, 0.95)";
+    type === "error"
+      ? "rgba(239, 68, 68, 0.95)"
+      : type === "ok"
+      ? "rgba(34, 197, 94, 0.95)"
+      : "rgba(167, 180, 199, 0.95)";
 }
 
-function parseIntSafe(v) {
-  const n = Number.parseInt(v, 10);
-  return Number.isFinite(n) ? n : NaN;
+function getOptionPrice(selectEl) {
+  const opt = selectEl?.selectedOptions?.[0];
+  if (!opt) return NaN;
+  const p = Number(opt.dataset.price);
+  return Number.isFinite(p) ? p : NaN;
+}
+
+function computeTotal() {
+  const prices = [
+    getOptionPrice(els.cpuPlan),
+    getOptionPrice(els.ramPlan),
+    getOptionPrice(els.storagePlan),
+    getOptionPrice(els.osPlan)
+  ];
+
+  if (prices.some((p) => !Number.isFinite(p))) return { ready: false, total: 0 };
+
+  const total = prices.reduce((a, b) => a + b, 0);
+  return { ready: true, total };
+}
+
+function updateTotalUI() {
+  const { ready, total } = computeTotal();
+
+  if (!ready) {
+    els.totalPrice.value = "0 €";
+    els.priceHint.textContent = "Selecciona CPU, RAM, almacenamiento y SO.";
+    els.priceHint.style.color = "rgba(167, 180, 199, 0.95)";
+    return;
+  }
+
+  els.totalPrice.value = `${total} €`;
+
+  if (total > 700) {
+    els.priceHint.textContent = `⚠️ El total supera 700€ (${total}€). Cambia alguna opción.`;
+    els.priceHint.style.color = "rgba(239, 68, 68, 0.95)";
+  } else {
+    els.priceHint.textContent = "Total calculado automáticamente.";
+    els.priceHint.style.color = "rgba(34, 197, 94, 0.95)";
+  }
 }
 
 function validateForm() {
   const name = els.name.value.trim();
-  const cpu = parseIntSafe(els.cpuCores.value);
-  const ram = parseIntSafe(els.ramGb.value);
-  const storageType = els.storageType.value;
-  const storageGb = parseIntSafe(els.storageGb.value);
-  const os = els.os.value;
-  const budget = parseIntSafe(els.budget.value);
+  const cpu = els.cpuPlan.value;
+  const ram = els.ramPlan.value;
+  const storage = els.storagePlan.value;
+  const os = els.osPlan.value;
 
   const errors = [];
-
   if (name.length < 3) errors.push("El nombre debe tener al menos 3 caracteres.");
-  if (!Number.isFinite(cpu) || cpu < 2) errors.push("CPU debe ser mínimo 2 núcleos.");
-  if (!Number.isFinite(ram) || ram < 4) errors.push("RAM debe ser mínimo 4 GB.");
-  if (!storageType) errors.push("Selecciona SSD o HDD.");
-  if (!Number.isFinite(storageGb) || storageGb < 64) errors.push("Capacidad mínima recomendada: 64 GB.");
-  if (!os) errors.push("Selecciona el sistema operativo.");
-  if (!Number.isFinite(budget)) errors.push("El presupuesto debe ser un número.");
-  if (Number.isFinite(budget) && budget > 700) errors.push("El presupuesto no puede superar 700€.");
+  if (!cpu) errors.push("Selecciona una opción de CPU.");
+  if (!ram) errors.push("Selecciona una opción de RAM.");
+  if (!storage) errors.push("Selecciona una opción de almacenamiento.");
+  if (!os) errors.push("Selecciona un sistema operativo.");
 
-  return { ok: errors.length === 0, errors, data: { name, cpu, ram, storageType, storageGb, os, budget } };
+  const { ready, total } = computeTotal();
+  if (!ready) errors.push("Faltan opciones para calcular el total.");
+  if (ready && total > 700) errors.push(`El total (${total}€) no puede superar 700€.`);
+
+  return { ok: errors.length === 0, errors, data: { name, cpu, ram, storage, os, total } };
 }
 
 function statusClass(status) {
@@ -59,6 +97,15 @@ function statusClass(status) {
   if (s === "mantenimiento") return "card--mantenimiento";
   if (s === "inactivo") return "card--inactivo";
   return "";
+}
+
+function escapeHtml(str) {
+  return String(str ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 function makeCard(server) {
@@ -79,30 +126,13 @@ function makeCard(server) {
       <li><b>Presupuesto</b><span>${Number(server.budget)} €</span></li>
       <li><b>ID</b><span>#${Number(server.id)}</span></li>
     </ul>
+
+    <div class="card__actions">
+      <button class="btn btn--danger js-delete" data-id="${Number(server.id)}">🗑️ Borrar</button>
+    </div>
   `;
 
   return div;
-}
-
-function escapeHtml(str) {
-  return String(str ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
-
-async function fetchServers() {
-  els.cards.innerHTML = `<p class="muted">Cargando servidores...</p>`;
-  try {
-    const res = await fetch(API_URL);
-    const data = await res.json();
-
-    renderServers(Array.isArray(data) ? data : []);
-  } catch (e) {
-    els.cards.innerHTML = `<p class="muted">No se pudo conectar con la API. ¿Está el backend encendido?</p>`;
-  }
 }
 
 function renderServers(list) {
@@ -116,6 +146,17 @@ function renderServers(list) {
   els.cards.appendChild(frag);
 }
 
+async function fetchServers() {
+  els.cards.innerHTML = `<p class="muted">Cargando servidores...</p>`;
+  try {
+    const res = await fetch(API_URL);
+    const data = await res.json();
+    renderServers(Array.isArray(data) ? data : []);
+  } catch {
+    els.cards.innerHTML = `<p class="muted">No se pudo conectar con la API. ¿Está el backend encendido?</p>`;
+  }
+}
+
 async function createServer() {
   const { ok, errors, data } = validateForm();
   if (!ok) {
@@ -123,14 +164,13 @@ async function createServer() {
     return;
   }
 
-  // ✅ Ajuste al formato que espera el backend
   const payload = {
     name: data.name,
-    cpu: `${data.cpu} vCPU`,
-    ram: `${data.ram} GB`,
-    storage: `${data.storageGb} GB ${data.storageType}`,
+    cpu: data.cpu,
+    ram: data.ram,
+    storage: data.storage,
     os: data.os,
-    budget: data.budget,
+    budget: data.total,
     status: els.status.value || "activo"
   };
 
@@ -143,31 +183,49 @@ async function createServer() {
       body: JSON.stringify(payload)
     });
 
-    const result = await res.json();
+    const result = await res.json().catch(() => ({}));
 
     if (!res.ok) {
-      // backend devuelve { message, errors }
       const msg = result?.errors?.[0] || result?.message || "Error al guardar.";
       setMsg(msg, "error");
       return;
     }
 
-    // SPA: agregar card sin recargar
-    const current = els.cards.querySelector(".muted") ? [] : null;
-    // Re-render simple: pedimos lista otra vez (más consistente)
     await fetchServers();
-
     setMsg("Servidor guardado ✅", "ok");
     els.form.reset();
-    els.status.value = "activo";
-  } catch (e) {
+    updateTotalUI();
+  } catch {
     setMsg("No se pudo guardar. Revisa que el backend esté corriendo.", "error");
   }
 }
 
-// Events
+async function deleteServer(id) {
+  const ok = confirm("¿Seguro que quieres borrar este servidor?");
+  if (!ok) return;
+
+  try {
+    const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok) {
+      alert(data.message || "No se pudo borrar el servidor.");
+      return;
+    }
+
+    setMsg("Servidor borrado ✅", "ok");
+    await fetchServers();
+  } catch {
+    alert("No se pudo conectar con la API para borrar.");
+  }
+}
+
+[els.cpuPlan, els.ramPlan, els.storagePlan, els.osPlan].forEach((el) => {
+  el.addEventListener("change", updateTotalUI);
+});
+
 els.form.addEventListener("submit", (e) => {
-  e.preventDefault(); // ✅ SPA sin recargar
+  e.preventDefault();
   createServer();
 });
 
@@ -175,9 +233,15 @@ els.reloadBtn.addEventListener("click", fetchServers);
 
 els.resetBtn.addEventListener("click", () => {
   els.form.reset();
-  els.status.value = "activo";
   setMsg("");
+  updateTotalUI();
 });
 
-// Init
+els.cards.addEventListener("click", (e) => {
+  const btn = e.target.closest(".js-delete");
+  if (!btn) return;
+  deleteServer(btn.dataset.id);
+});
+
+updateTotalUI();
 fetchServers();

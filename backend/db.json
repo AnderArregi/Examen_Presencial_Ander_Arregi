@@ -456,17 +456,6 @@
   ],
   "servers": [
     {
-      "id": 1,
-      "name": "windows",
-      "cpu": "4 vCPU",
-      "ram": "4 GB",
-      "storage": "200 GB SSD",
-      "os": "Windows Server 2022",
-      "budget": 200,
-      "status": "mantenimiento",
-      "createdAt": "2025-12-23T08:35:17.019Z"
-    },
-    {
       "id": 2,
       "name": "Ander Arregi",
       "cpu": "3 vCPU",
@@ -479,14 +468,14 @@
     },
     {
       "id": 3,
-      "name": "jduudud",
+      "name": "Ander Arregi",
       "cpu": "4 vCPU",
-      "ram": "5 GB",
-      "storage": "360 GB HDD",
-      "os": "Debian 12",
-      "budget": 300,
-      "status": "inactivo",
-      "createdAt": "2025-12-23T08:44:10.613Z"
+      "ram": "4 GB",
+      "storage": "512 GB SSD",
+      "os": "Ubuntu 24.04",
+      "budget": 390,
+      "status": "mantenimiento",
+      "createdAt": "2025-12-23T10:25:33.113Z"
     }
   ]
 }
